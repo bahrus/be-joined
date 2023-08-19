@@ -1,11 +1,40 @@
 {
   "name": "be-joined",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Allow microdata elements and host properties to be combined together (interpolated).",
+  "keywords": [
+    "web components",
+    "web component",
+    "custom elements",
+    "custom element",
+    "built-in"
+  ],
+  "main": "be-joined.js",
+  "module": "be-joined.js",
+  "exports": {
+    ".": "./be-committed.js",
+    "./be-committed.js": "./be-committed.js"
   },
-  "author": "",
+  "files": [
+    "*.js",
+    "types.d.ts"
+  ],
+  "dependencies": {
+    "be-enhanced": "0.0.41",
+    "be-hive": "0.0.116",
+    "trans-render": "0.0.702",
+    "xtal-element": "0.0.577"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.37.1",
+    "may-it-serve": "0.0.5"
+  },
+  "scripts": {
+    "serve": "node node_modules/may-it-serve/serve.js",
+    "test": "playwright test",
+    "safari": "npx playwright wk http://localhost:3030",
+    "update": "ncu -u && npm install"
+  },
+  "author": "anderson.bruce.b@gmail.com",
   "license": "MIT"
 }
