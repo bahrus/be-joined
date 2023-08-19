@@ -26,7 +26,7 @@ results in:
 ```html
 <link itemprop=isVegetarian href="https://schema.org/True">
 <input be-joined='
-  Set disabled from is vegetarian itemprop.
+  Link is vegetarian itemprop to disabled property of $0.
 '>
 ```
 
