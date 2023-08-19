@@ -60,3 +60,10 @@ results in:
 The parts that are wrapped in double {{}} checks for microdata elements, and if not found, searches for value from host.  The ones in single only checks microdata elements.
 
 The host is determined by first searching for itemscoped element with beScoped and/or dash in the name.  If not found, gets values fro getRootNode().host.
+
+Example 2a:
+
+<a be-joined='
+  Join <?protocol>://<?domain>/<?articleType>/{language}/{language}-{classes}/#{section} to href.
+'
+>Basic, Improved - Prototype Definition</a>
