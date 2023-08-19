@@ -26,7 +26,7 @@ results in:
 ```html
 <link itemprop=isVegetarian href="https://schema.org/True">
 <input be-joined='
-  Link is vegetarian itemprop to disabled property of $0.
+  Join is vegetarian to disabled.
 '>
 ```
 
@@ -63,7 +63,7 @@ The host is determined by first searching for itemscoped element with beScoped a
 
 Example 2a:
 
-<a be-joined='
-  Join <?protocol>://<?domain>/<?articleType>/{language}/{language}-{classes}/#{section} to href.
-'
+<a be-joined="
+  Join {protocol}://{domain}/{articleType}/{language}/{language}-{classes}/#{section} to href.
+"
 >Basic, Improved - Prototype Definition</a>
