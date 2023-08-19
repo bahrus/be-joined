@@ -2,35 +2,7 @@
 
 Allow microdata elements and host properties to be combined together (interpolated).
 
-## Example 1 - Single dependency (no interpolation)
-
-```html
-<link itemprop=isVegetarian href="https://schema.org/True">
-<input be-joined='{
-  "set": {
-    "disabled": {
-      "fromItemProp": "isVegetarian"
-    }
-  }
-}'>
-```
-
-results in:
-
-```html
-<input disabled>
-```
-
-## Example 1a
-
-```html
-<link itemprop=isVegetarian href="https://schema.org/True">
-<input be-joined='
-  Join is vegetarian to disabled.
-'>
-```
-
-Example 2:
+Example 1:
 
 ```html
 <div itemscope>
@@ -64,6 +36,6 @@ The host is determined by first searching for itemscoped element with beScoped a
 Example 2a:
 
 <a be-joined="
-  Join {protocol}://{domain}/{articleType}/{language}/{language}-{classes}/#{section} to href.
+  Join {protocol}://{domain}/{articleType}/{language}/{language}-{classes}/#{section} as href.
 "
 >Basic, Improved - Prototype Definition</a>
