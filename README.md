@@ -1,4 +1,4 @@
-# be-joined
+# be-joined [TODO]
 
 Allow microdata elements and host properties to be combined together (interpolated).
 
@@ -7,7 +7,11 @@ Allow microdata elements and host properties to be combined together (interpolat
 ```html
 <link itemprop=isVegetarian href="https://schema.org/True">
 <input be-joined='{
-  "disabled": "isVegetarian"
+  "set": {
+    "disabled": {
+      "fromItemProp": "isVegetarian"
+    }
+  }
 }'>
 ```
 
@@ -17,7 +21,14 @@ results in:
 <input disabled>
 ```
 
+## Example 1a
 
+```html
+<link itemprop=isVegetarian href="https://schema.org/True">
+<input be-joined='
+  Set disabled from is vegetarian itemprop.
+'>
+```
 
 Example 2:
 
@@ -30,7 +41,11 @@ Example 2:
 <meta itemprop=topic content=classes>
 <meta itemprop=section content=basic-improved---prototype-definition>
 <a be-joined='{
-    "href": "{protocol}://{domain}/{articleType}/{language}/{language}-{classes}/#{section}"
+  "join":{
+    "href": {
+      "fromExpr": "{protocol}://{domain}/{articleType}/{language}/{language}-{classes}/#{section}"
+    }
+  }
 }'
 >Basic, Improved - Prototype Definition</a>
 </div>
