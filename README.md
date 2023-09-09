@@ -1,26 +1,31 @@
 # be-joined [TODO]
 
-Allow microdata elements and host properties to be combined together (interpolated).
+Allow values from microdata and form elements and host properties to be combined together (interpolated).
 
 Example 1:
 
 ```html
-<div itemscope>
-<meta itemprop=protocol content=https>
-<meta itemprop=domain content=docs.joshatz.com>
-<meta itemprop=articleType content=cheatsheets>
-<meta itemprop=language content=js>
-<meta itemprop=topic content=classes>
-<meta itemprop=section content=basic-improved---prototype-definition>
-<a be-joined='{
-  "join":{
-    "href": {
-      "fromExpr": "{protocol}://{domain}/{articleType}/{language}/{language}-{classes}/#{section}"
-    }
-  }
-}'
->Basic, Improved - Prototype Definition</a>
-</div>
+<form>
+  <div itemscope>
+    <meta itemprop=protocol content=https>
+    <meta itemprop=domain content=docs.joshatz.com>
+    <meta itemprop=articleType content=cheatsheets>
+    <!-- <meta itemprop=language content=js> -->
+    <input id=language value=js>
+    <!-- <meta itemprop=topic content=classes> -->
+    <input name=topic value=classes>
+
+    <meta itemprop=section content=basic-improved---prototype-definition>
+    <a be-joined='{
+      "join":{
+        "href": {
+          "fromExpr": "{|protocol}://{|domain}/{|articleType}/{#language}/{#language}-{&topic}/#{|section}"
+        }
+      }
+    }'
+    >Basic, Improved - Prototype Definition</a>
+  </div>
+</form>
 ```
 
 results in:
