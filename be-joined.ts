@@ -9,10 +9,10 @@ import {arr, tryParse} from 'be-enhanced/cpu.js';
 const cache = new Map<string, JSONValue>();
 const cachedCanonicals: {[key: string]: CanonicalConfig} = {};
 
-const prop = String.raw `^(?<!\\)As(?<prop>[\w]+)`;
+const prop = String.raw `^(?<!\\)as(?<prop>[\w]+)`;
 const reJoinStatements: RegExpOrRegExpExt<PJS>[] = [
     {
-        regExp: new RegExp(String.raw `^${prop}(?<!\\)Via(?<expr>.*)`),
+        regExp: new RegExp(String.raw `${prop}(?<!\\)Expression(?<expr>.*)`),
         defaultVals:{}
     },
 ];

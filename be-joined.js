@@ -4,10 +4,10 @@ import { register } from 'be-hive/register.js';
 import { arr, tryParse } from 'be-enhanced/cpu.js';
 const cache = new Map();
 const cachedCanonicals = {};
-const prop = String.raw `^(?<!\\)As(?<prop>[\w]+)`;
+const prop = String.raw `^(?<!\\)as(?<prop>[\w]+)`;
 const reJoinStatements = [
     {
-        regExp: new RegExp(String.raw `^${prop}(?<!\\)Via(?<expr>.*)`),
+        regExp: new RegExp(String.raw `${prop}(?<!\\)Expression(?<expr>.*)`),
         defaultVals: {}
     },
 ];
