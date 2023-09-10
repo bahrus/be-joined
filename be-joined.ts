@@ -77,6 +77,8 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
     }
 
     onCanonical(self: this): Partial<AllProps> {
+        const {canonicalConfig} = self;
+        console.log({canonicalConfig});
         return {
             resolved: true
         }

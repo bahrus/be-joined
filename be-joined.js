@@ -61,6 +61,8 @@ export class BeJoined extends BE {
         };
     }
     onCanonical(self) {
+        const { canonicalConfig } = self;
+        console.log({ canonicalConfig });
         return {
             resolved: true
         };
