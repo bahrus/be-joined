@@ -1,5 +1,6 @@
 import { ActionOnEventConfigs } from "trans-render/froop/types";
 import {IBE} from 'be-enhanced/types';
+import {Parts} from 'trans-render/lib/types';
 
 export interface EndUserProps extends IBE{
     camelConfig?: CamelConfig
@@ -11,12 +12,16 @@ export interface CamelConfig{
     Join?: Array<JoinStatement>
 }
 
+
+
 export interface AllProps extends EndUserProps{
     canonicalConfig?: CanonicalConfig
 }
 
-export interface CanonicalConfig{
+export type NameOfProp = string;
 
+export interface CanonicalConfig{
+    joins: {[key: NameOfProp]: Parts};
 }
 
 export type AP = AllProps;

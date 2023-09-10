@@ -1,10 +1,11 @@
 import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
 import {BEConfig, RegExpOrRegExpExt} from 'be-enhanced/types';
 import {XE} from 'xtal-element/XE.js';
-import {JSONValue} from 'trans-render/lib/types';
-import {Actions, AllProps, AP, PAP, ProPAP, POA, CanonicalConfig} from './types';
+import {JSONValue, Parts} from 'trans-render/lib/types';
+import {Actions, AllProps, AP, PAP, ProPAP, POA, CanonicalConfig, NameOfProp} from './types';
 import {register} from 'be-hive/register.js';
 import {arr, tryParse} from 'be-enhanced/cpu.js';
+import {toParts} from 'trans-render/lib/brace.js';
 
 const cache = new Map<string, JSONValue>();
 const cachedCanonicals: {[key: string]: CanonicalConfig} = {};
@@ -51,15 +52,28 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
 
         }
         const camelConfigArr = arr(camelConfig);
+        const joins: {[key: NameOfProp]: Parts} = {};
         for(const cc of camelConfigArr){
             const {Join} = cc;
             if(Join === undefined) continue;
             for(const j of Join){
                 const test = tryParse(j, reJoinStatements) as JoinStatement;
-                console.log({test});
+                if(test === null) throw 'PE';//Parse Error
+                const {expr, prop} = test;
+                const parts = toParts(expr);
+                joins[prop] = parts;
+                console.log({test, parts});
             }
         }
-        return {}
+        const canonicalConfig: CanonicalConfig = {
+            joins
+        };
+        if(parsedFrom !== undefined){
+            cachedCanonicals[parsedFrom] = canonicalConfig;
+        }
+        return {
+            canonicalConfig
+        }
     }
 
     onCanonical(self: this): Partial<AllProps> {

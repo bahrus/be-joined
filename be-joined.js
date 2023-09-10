@@ -2,6 +2,7 @@ import { BE, propDefaults, propInfo } from 'be-enhanced/BE.js';
 import { XE } from 'xtal-element/XE.js';
 import { register } from 'be-hive/register.js';
 import { arr, tryParse } from 'be-enhanced/cpu.js';
+import { toParts } from 'trans-render/lib/brace.js';
 const cache = new Map();
 const cachedCanonicals = {};
 const prop = String.raw `^(?<!\\)as(?<prop>[\w]+)`;
@@ -34,16 +35,30 @@ export class BeJoined extends BE {
             }
         }
         const camelConfigArr = arr(camelConfig);
+        const joins = {};
         for (const cc of camelConfigArr) {
             const { Join } = cc;
             if (Join === undefined)
                 continue;
             for (const j of Join) {
                 const test = tryParse(j, reJoinStatements);
-                console.log({ test });
+                if (test === null)
+                    throw 'PE'; //Parse Error
+                const { expr, prop } = test;
+                const parts = toParts(expr);
+                joins[prop] = parts;
+                console.log({ test, parts });
             }
         }
-        return {};
+        const canonicalConfig = {
+            joins
+        };
+        if (parsedFrom !== undefined) {
+            cachedCanonicals[parsedFrom] = canonicalConfig;
+        }
+        return {
+            canonicalConfig
+        };
     }
     onCanonical(self) {
         return {
