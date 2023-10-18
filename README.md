@@ -34,11 +34,11 @@ As we've seen above, we will encounter special symbols used in order to keep the
 
 | Symbol      | Meaning              | Notes                                                                                |
 |-------------|----------------------|--------------------------------------------------------------------------------------|
-| /propName   |"Hostish"             | Attaches listeners to getters/setters.                                               |
-| @propName   |Name attribute        | Listens for input events.                                                            |
-| $propName   |Itemprop attribute    | If contenteditible, listens for input events.  Otherwise, uses be-value-added.       |
-| #propName   |Id attribute          | Listens for input events.                                                            |
-| -prop-name  |Marker indicates prop | Attaches listeners to getters/setters.                                               |
+| /propName   |"Hostish"             | Pulls in values from the "host".                                                     |
+| @propName   |Name attribute        | Pulls in values from form elements using name attribute.                             |
+| $propName   |Itemprop attribute    | Pulls in values from microdata elements with itemprop attribute.                     |
+| #propName   |Id attribute          | Pulls in values from elements identified ia the id.                                  |
+| -prop-name  |Marker indicates prop | Pulls in values from nearest "upsearch" element matching the attribute.              |
 
 
 "Hostish" means:
