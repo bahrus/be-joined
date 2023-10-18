@@ -16,9 +16,7 @@ Example 1:
     <input name=topic value=classes>
 
     <meta itemprop=section content=basic-improved---prototype-definition>
-    <a be-joined="
-      Join as href expression {|protocol}://{|domain}/{|articleType}/{#language}/{#language}-{&topic}/#{|section}.
-      "
+    <a -href="{$protocol}://{$domain}/{@articleType}/{#language}/{#language}-{@topic}/#{$section}" be-joined
     >Basic, Improved - Prototype Definition</a>
   </div>
 </form>
