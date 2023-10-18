@@ -28,9 +28,23 @@ results in:
 <a href=https://docs.joshuatz.com/cheatsheets/js/js-classes/#basic-improved---prototype-definition>Basic, Improved - Prototype Definition</a>
 ```
 
-The parts that are wrapped in double {{}} checks for microdata elements, and if not found, searches for value from host.  The ones in single only checks microdata elements.
+## Special Symbols
 
-The host is determined by first searching for itemscoped element with beScoped and/or dash in the name.  If not found, gets values fro getRootNode().host.
+As we've seen above, we will encounter special symbols used in order to keep the statements small.  A summary of those symbols is shown below
+
+| Symbol      | Meaning              | Notes                                                                                |
+|-------------|----------------------|--------------------------------------------------------------------------------------|
+| /propName   |"Hostish"             | Attaches listeners to getters/setters.                                               |
+| @propName   |Name attribute        | Listens for input events.                                                            |
+| $propName   |Itemprop attribute    | If contenteditible, listens for input events.  Otherwise, uses be-value-added.       |
+| #propName   |Id attribute          | Listens for input events.                                                            |
+| -prop-name  |Marker indicates prop | Attaches listeners to getters/setters.                                               |
+
+
+"Hostish" means:
+
+1.  First, do a "closest" for an element with attribute itemscope, where the tag name has a dash in it.  Do that search recursively.  
+2.  If no match found, use getRootNode().host.
 
 Example 2a:
 
