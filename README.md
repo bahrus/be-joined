@@ -46,7 +46,7 @@ As we've seen above, we will encounter special symbols used in order to keep the
 1.  First, do a "closest" for an element with attribute itemscope, where the tag name has a dash in it.  Do that search recursively.  
 2.  If no match found, use getRootNode().host.
 
-## Example 2
+## Example 2 [TODO]
 
 ```html
 <my-custom-element>
@@ -56,4 +56,4 @@ As we've seen above, we will encounter special symbols used in order to keep the
 </my-custom-element>
 ```
 
-In this example, when no symbols are provided (or slash is used), we assum the property values should come from the host (ish)
+In this example, when no symbols are provided (or slash is used), we assume the property values should come from the host (ish)
