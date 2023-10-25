@@ -10,6 +10,15 @@ export class BeJoined extends BE {
             const { name, value } = attrib;
             if (name.startsWith('-') && value.length > 0) {
                 const parts = toParts(value);
+                for (const part of parts) {
+                    if (typeof part === 'string')
+                        continue;
+                    const [remote] = part;
+                    const observeRule = {
+                        remoteType: remote[0],
+                        remoteProp: remote.substring(1),
+                    };
+                }
                 console.log({ parts });
             }
         }

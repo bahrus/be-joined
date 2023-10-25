@@ -4,7 +4,8 @@ import {XE} from 'xtal-element/XE.js';
 import {Actions, AllProps, AP, PAP, ProPAP, POA} from './types';
 import {register} from 'be-hive/register.js';
 import {toParts} from 'trans-render/lib/brace.js';
-import {lispToCamel} from 'trans-render/lib/lispToCamel.js';
+import {ObserveRule} from 'be-observant/types';
+import { ElTypes } from 'be-linked/types';
 
 export class BeJoined extends BE<AP, Actions> implements Actions{
     override async attach(enhancedElement: Element, enhancementInfo: EnhancementInfo) {
@@ -14,6 +15,14 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
             const {name, value} = attrib;
             if(name.startsWith('-') && value.length > 0){
                 const parts = toParts(value);
+                for(const part of parts){
+                    if(typeof part === 'string') continue;
+                    const [remote] = part as any as [string];
+                    const observeRule: ObserveRule = {
+                        remoteType: remote[0] as ElTypes,
+                        remoteProp: remote.substring(1),
+                    };
+                }
                 console.log({parts});
             }
         }
