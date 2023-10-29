@@ -11,6 +11,7 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
     override async attach(enhancedElement: Element, enhancementInfo: EnhancementInfo) {
         super.attach(enhancedElement, enhancementInfo);
         const {attributes} = enhancedElement;
+        const observeRules: Array<ObserveRule> = [];
         for(const attrib of attributes){
             const {name, value} = attrib;
             if(name.startsWith('-') && value.length > 0){
@@ -22,8 +23,8 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
                         remoteType: remote[0] as ElTypes,
                         remoteProp: remote.substring(1),
                     };
+                    observeRules.push(observeRule);
                 }
-                console.log({parts});
             }
         }
     }

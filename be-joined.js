@@ -6,6 +6,7 @@ export class BeJoined extends BE {
     async attach(enhancedElement, enhancementInfo) {
         super.attach(enhancedElement, enhancementInfo);
         const { attributes } = enhancedElement;
+        const observeRules = [];
         for (const attrib of attributes) {
             const { name, value } = attrib;
             if (name.startsWith('-') && value.length > 0) {
@@ -18,8 +19,8 @@ export class BeJoined extends BE {
                         remoteType: remote[0],
                         remoteProp: remote.substring(1),
                     };
+                    observeRules.push(observeRule);
                 }
-                console.log({ parts });
             }
         }
     }
