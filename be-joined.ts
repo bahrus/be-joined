@@ -6,16 +6,21 @@ import {register} from 'be-hive/register.js';
 import {toParts} from 'trans-render/lib/brace.js';
 import {ObserveRule} from 'be-observant/types';
 import { ElTypes } from 'be-linked/types';
+import {Parts} from 'trans-render/lib/types';
+import {lispToCamel} from 'trans-render/lib/lispToCamel.js';
+
 
 export class BeJoined extends BE<AP, Actions> implements Actions{
     override async attach(enhancedElement: Element, enhancementInfo: EnhancementInfo) {
         super.attach(enhancedElement, enhancementInfo);
         const {attributes} = enhancedElement;
         const observeRules: Array<ObserveRule> = [];
+        const propParts: {[key: string]: Parts} = {};
         for(const attrib of attributes){
             const {name, value} = attrib;
             if(name.startsWith('-') && value.length > 0){
                 const parts = toParts(value);
+                propParts[lispToCamel(name.substring(1))] = parts;
                 for(const part of parts){
                     if(typeof part === 'string') continue;
                     const [remote] = part as any as [string];
@@ -25,7 +30,18 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
                     };
                     observeRules.push(observeRule);
                 }
+
             }
+        }
+        Object.assign(this, {propParts, observeRules});
+        
+    }
+
+    onObserveRules(self: this): Partial<AllProps> {
+        const {observeRules, propParts} = self;
+        console.log({observeRules, propParts});
+        return {
+            resolved: true,
         }
     }
 }
@@ -46,7 +62,11 @@ const xe = new XE<AP, Actions>({
         propInfo: {
             ...propInfo
         },
-        actions:{}
+        actions:{
+            onObserveRules: {
+                ifAllOf: ['observeRules', 'propParts']
+            }
+        }
     },
     superclass: BeJoined
 });
