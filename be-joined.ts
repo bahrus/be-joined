@@ -8,9 +8,10 @@ import {ObserveRule} from 'be-observant/types';
 import { ElTypes } from 'be-linked/types';
 import {Parts} from 'trans-render/lib/types';
 import {lispToCamel} from 'trans-render/lib/lispToCamel.js';
-
+import {hydrateObserve} from 'be-observant/hydrateObserve.js';
 
 export class BeJoined extends BE<AP, Actions> implements Actions{
+    #abortControllers: Array<AbortController>  = [];
     override async attach(enhancedElement: Element, enhancementInfo: EnhancementInfo) {
         super.attach(enhancedElement, enhancementInfo);
         const {attributes} = enhancedElement;
@@ -27,6 +28,7 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
                     const observeRule: ObserveRule = {
                         remoteType: remote[0] as ElTypes,
                         remoteProp: remote.substring(1),
+                        callback: this.handleObserveCallback
                     };
                     observeRules.push(observeRule);
                 }
@@ -37,9 +39,16 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
         
     }
 
+    handleObserveCallback(observe: ObserveRule, val: any){
+        console.log({observe, val});
+    }
+
     onObserveRules(self: this): Partial<AllProps> {
         const {observeRules, propParts} = self;
         console.log({observeRules, propParts});
+        for(const observeRule of observeRules!){
+            hydrateObserve(self, observeRule, self.#abortControllers);
+        }
         return {
             resolved: true,
         }
