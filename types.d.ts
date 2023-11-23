@@ -1,15 +1,29 @@
 import { ActionOnEventConfigs } from "trans-render/froop/types";
 import {IBE} from 'be-enhanced/types';
 import {ObserveRule} from 'be-observant/types';
-import {Parts} from 'trans-render/lib/types';
+import {Parts, StringOrProp, PropInfo} from 'trans-render/lib/types';
 
+export interface ObservableParts{
+    
+}
 export interface EndUserProps extends IBE{
-    observeRules?: Array<ObserveRule>;
-    propParts?: {[key: string]: Parts};
+    markers: Array<Attr>;
 }
 
-export interface AllProps extends EndUserProps{
+export interface PropObserver{
+    prop: [string, PropInfo],
+    observe: ObserveRule;
+}
 
+export type StringOrPropObserver = string | PropObserver;
+
+export type InterpolationRule = Array<StringOrPropObserver>;
+
+export interface AllProps extends EndUserProps{
+    observeRules?: Array<ObserveRule>;
+    //propParts?: {[key: string]: Parts};
+    parsedMarkers?: {[key: string]: InterpolationRule}
+    observerToInterpolationRule?: Map<ObserveRule, InterpolationRule>
 }
 
 export type AP = AllProps;
@@ -21,5 +35,7 @@ export type ProPAP = Promise<PAP>;
 export type POA = [PAP | undefined, ActionOnEventConfigs<PAP, Actions>];
 
 export interface Actions{
-    onObserveRules(self: this): PAP;
+    //onObserveRules(self: this): PAP;
+    onMarkers(self: this): PAP;
+    onParsedMarkers(self: this): PAP;
 }

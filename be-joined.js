@@ -9,40 +9,82 @@ export class BeJoined extends BE {
     async attach(enhancedElement, enhancementInfo) {
         super.attach(enhancedElement, enhancementInfo);
         const { attributes } = enhancedElement;
+        this.markers = Array.from(attributes).filter(x => x.name.startsWith('-') && x.value.length > 0);
+    }
+    onMarkers(self) {
+        // const observeRules: Array<ObserveRule> = [];
+        // const propParts: {[key: string]: Parts} = {};
+        // for(const attrib of attributes){
+        //     const {name, value} = attrib;
+        //     if(name.startsWith('-') && value.length > 0){
+        //         const parts = toParts(value);
+        //         propParts[lispToCamel(name.substring(1))] = parts;
+        //         for(const part of parts){
+        //             if(typeof part === 'string') continue;
+        //             const [remote] = part as any as [string];
+        //             const observeRule: ObserveRule = {
+        //                 remoteType: remote[0] as ElTypes,
+        //                 remoteProp: remote.substring(1),
+        //                 callback: this.handleObserveCallback
+        //             };
+        //             observeRules.push(observeRule);
+        //         }
+        //     }
+        // }
+        // Object.assign(this, {propParts, observeRules});
+        const { markers } = self;
+        const parsedMarkers = {};
+        const observerToInterpolationRule = new Map();
         const observeRules = [];
-        const propParts = {};
-        for (const attrib of attributes) {
-            const { name, value } = attrib;
-            if (name.startsWith('-') && value.length > 0) {
-                const parts = toParts(value);
-                propParts[lispToCamel(name.substring(1))] = parts;
-                for (const part of parts) {
-                    if (typeof part === 'string')
-                        continue;
-                    const [remote] = part;
-                    const observeRule = {
-                        remoteType: remote[0],
-                        remoteProp: remote.substring(1),
-                        callback: this.handleObserveCallback
-                    };
-                    observeRules.push(observeRule);
+        for (const marker of markers) {
+            const { name, value } = marker;
+            const propName = lispToCamel(name.substring(1));
+            const interpolationRule = [];
+            parsedMarkers[propName] = interpolationRule;
+            const parts = toParts(value);
+            for (const part of parts) {
+                if (typeof part === 'string') {
+                    interpolationRule.push(part);
+                    continue;
                 }
+                const [remote] = part;
+                const observeRule = {
+                    remoteType: remote[0],
+                    remoteProp: remote.substring(1),
+                    callback: this.handleObserveCallback
+                };
+                observeRules.push(observeRule);
+                observerToInterpolationRule.set(observeRule, interpolationRule);
+                const propObserver = {
+                    observe: observeRule,
+                    prop: part
+                };
+                interpolationRule.push(propObserver);
             }
         }
-        Object.assign(this, { propParts, observeRules });
+        return {
+            parsedMarkers,
+            observerToInterpolationRule,
+            observeRules
+        };
     }
-    handleObserveCallback(observe, val) {
+    handleObserveCallback = (observe, val) => {
         console.log({ observe, val });
-    }
-    onObserveRules(self) {
-        const { observeRules, propParts } = self;
-        //console.log({observeRules, propParts});
-        for (const observeRule of observeRules) {
-            console.log({ observeRule });
-            new Observer(self, observeRule, self.#abortControllers);
+    };
+    onParsedMarkers(self) {
+        const { parsedMarkers } = self;
+        for (const key in parsedMarkers) {
+            const interpolationRule = parsedMarkers[key];
+            for (const propObserverOrString of interpolationRule) {
+                if (typeof propObserverOrString === 'string')
+                    continue;
+                const { observe } = propObserverOrString;
+                new Observer(self, observe, self.#abortControllers);
+                //new Observer(self, )
+            }
         }
         return {
-            resolved: true,
+            resolved: true
         };
     }
 }
@@ -60,9 +102,13 @@ const xe = new XE({
             ...propInfo
         },
         actions: {
-            onObserveRules: {
-                ifAllOf: ['observeRules', 'propParts']
-            }
+            onMarkers: 'markers',
+            onParsedMarkers: {
+                ifAllOf: ['parsedMarkers', 'observerToInterpolationRule', 'observeRules']
+            },
+            // onObserveRules: {
+            //     ifAllOf: ['observeRules', 'propParts']
+            // }
         }
     },
     superclass: BeJoined
