@@ -13,6 +13,7 @@ export interface EndUserProps extends IBE{
 export interface PropObserver{
     prop: [string, PropInfo],
     observe: ObserveRule;
+    latestVal?: string;
 }
 
 export type StringOrPropObserver = string | PropObserver;

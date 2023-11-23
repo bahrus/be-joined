@@ -58,7 +58,11 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
     }
 
     handleObserveCallback = (observe: ObserveRule, val: any) => {
-        console.log({observe, val});
+        const interpolationRule = this.observerToInterpolationRule?.get(observe);
+        const propObserver = interpolationRule?.find(x => typeof x !== 'string' && x.observe === observe) as PropObserver;
+        propObserver.latestVal = val;
+        console.log({observe, val, interpolationRule, propObserver});
+
     }
 
     onParsedMarkers(self: this): PAP {
