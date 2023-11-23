@@ -12,26 +12,6 @@ export class BeJoined extends BE {
         this.markers = Array.from(attributes).filter(x => x.name.startsWith('-') && x.value.length > 0);
     }
     onMarkers(self) {
-        // const observeRules: Array<ObserveRule> = [];
-        // const propParts: {[key: string]: Parts} = {};
-        // for(const attrib of attributes){
-        //     const {name, value} = attrib;
-        //     if(name.startsWith('-') && value.length > 0){
-        //         const parts = toParts(value);
-        //         propParts[lispToCamel(name.substring(1))] = parts;
-        //         for(const part of parts){
-        //             if(typeof part === 'string') continue;
-        //             const [remote] = part as any as [string];
-        //             const observeRule: ObserveRule = {
-        //                 remoteType: remote[0] as ElTypes,
-        //                 remoteProp: remote.substring(1),
-        //                 callback: this.handleObserveCallback
-        //             };
-        //             observeRules.push(observeRule);
-        //         }
-        //     }
-        // }
-        // Object.assign(this, {propParts, observeRules});
         const { markers } = self;
         const parsedMarkers = {};
         const observerToInterpolationRule = new Map();

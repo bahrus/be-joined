@@ -20,27 +20,6 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
     }
 
     onMarkers(self: this){
-        // const observeRules: Array<ObserveRule> = [];
-        // const propParts: {[key: string]: Parts} = {};
-        // for(const attrib of attributes){
-        //     const {name, value} = attrib;
-        //     if(name.startsWith('-') && value.length > 0){
-        //         const parts = toParts(value);
-        //         propParts[lispToCamel(name.substring(1))] = parts;
-        //         for(const part of parts){
-        //             if(typeof part === 'string') continue;
-        //             const [remote] = part as any as [string];
-        //             const observeRule: ObserveRule = {
-        //                 remoteType: remote[0] as ElTypes,
-        //                 remoteProp: remote.substring(1),
-        //                 callback: this.handleObserveCallback
-        //             };
-        //             observeRules.push(observeRule);
-        //         }
-
-        //     }
-        // }
-        // Object.assign(this, {propParts, observeRules});
         const {markers} = self;
         const parsedMarkers: {[key: string]: InterpolationRule} = {};
         const observerToInterpolationRule: Map<ObserveRule, InterpolationRule> = new Map();
@@ -97,18 +76,6 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
             resolved: true
         }
     }
-
-    // onObserveRules(self: this): Partial<AllProps> {
-    //     const {observeRules, propParts} = self;
-    //     //console.log({observeRules, propParts});
-    //     for(const observeRule of observeRules!){
-    //         console.log({observeRule});
-    //         new Observer(self, observeRule, self.#abortControllers);
-    //     }
-    //     return {
-    //         resolved: true,
-    //     }
-    // }
 }
 
 export interface BeJoined extends AllProps{}
