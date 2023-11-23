@@ -3,7 +3,7 @@ import { XE } from 'xtal-element/XE.js';
 import { register } from 'be-hive/register.js';
 import { toParts } from 'trans-render/lib/brace.js';
 import { lispToCamel } from 'trans-render/lib/lispToCamel.js';
-import { hydrateObserve } from 'be-observant/hydrateObserve.js';
+import { Observer } from 'be-observant/Observer.js';
 export class BeJoined extends BE {
     #abortControllers = [];
     async attach(enhancedElement, enhancementInfo) {
@@ -36,9 +36,10 @@ export class BeJoined extends BE {
     }
     onObserveRules(self) {
         const { observeRules, propParts } = self;
-        console.log({ observeRules, propParts });
+        //console.log({observeRules, propParts});
         for (const observeRule of observeRules) {
-            hydrateObserve(self, observeRule, self.#abortControllers);
+            console.log({ observeRule });
+            new Observer(self, observeRule, self.#abortControllers);
         }
         return {
             resolved: true,

@@ -8,7 +8,7 @@ import {ObserveRule} from 'be-observant/types';
 import { ElTypes } from 'be-linked/types';
 import {Parts} from 'trans-render/lib/types';
 import {lispToCamel} from 'trans-render/lib/lispToCamel.js';
-import {hydrateObserve} from 'be-observant/hydrateObserve.js';
+import {Observer} from 'be-observant/Observer.js';
 
 export class BeJoined extends BE<AP, Actions> implements Actions{
     #abortControllers: Array<AbortController>  = [];
@@ -45,9 +45,10 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
 
     onObserveRules(self: this): Partial<AllProps> {
         const {observeRules, propParts} = self;
-        console.log({observeRules, propParts});
+        //console.log({observeRules, propParts});
         for(const observeRule of observeRules!){
-            hydrateObserve(self, observeRule, self.#abortControllers);
+            console.log({observeRule});
+            new Observer(self, observeRule, self.#abortControllers);
         }
         return {
             resolved: true,
