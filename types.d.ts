@@ -23,7 +23,8 @@ export type InterpolationRule = Array<StringOrPropObserver>;
 export interface AllProps extends EndUserProps{
     observeRules?: Array<ObserveRule>;
     //propParts?: {[key: string]: Parts};
-    parsedMarkers?: {[key: string]: InterpolationRule}
+    //parsedMarkers?: {[key: string]: InterpolationRule}
+    parsedMarkers?: Map<InterpolationRule, string>,
     observerToInterpolationRule?: Map<ObserveRule, InterpolationRule>
 }
 

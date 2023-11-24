@@ -21,14 +21,15 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
 
     onMarkers(self: this){
         const {markers} = self;
-        const parsedMarkers: {[key: string]: InterpolationRule} = {};
+        const parsedMarkers: Map<InterpolationRule, string> = new Map();
         const observerToInterpolationRule: Map<ObserveRule, InterpolationRule> = new Map();
         const observeRules: Array<ObserveRule> = [];
         for(const marker of markers){
             const {name, value} = marker;
             const propName = lispToCamel(name.substring(1));
             const interpolationRule: InterpolationRule = [];
-            parsedMarkers[propName] = interpolationRule;
+            //parsedMarkers[propName] = interpolationRule;
+            parsedMarkers.set(interpolationRule, propName);
             const parts = toParts(value);
             for(const part of parts){
                 if(typeof part === 'string'){
@@ -67,8 +68,7 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
 
     onParsedMarkers(self: this): PAP {
         const {parsedMarkers} = self;
-        for(const key in parsedMarkers!){
-            const interpolationRule = parsedMarkers[key];
+        for(const [interpolationRule, propName] of parsedMarkers!){
             for(const propObserverOrString of interpolationRule){
                 if(typeof propObserverOrString === 'string') continue;
                 const {observe} = propObserverOrString;
