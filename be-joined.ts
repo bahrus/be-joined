@@ -59,18 +59,22 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
     }
 
     handleObserveCallback = (observe: ObserveRule, val: any) => {
+        console.log({observe, val});
         const interpolationRule = this.observerToInterpolationRule?.get(observe)!;
         const propObserver = interpolationRule.find(x => typeof x !== 'string' && x.observe === observe) as PropObserver;
         if(propObserver.latestVal === val) return;
         propObserver.latestVal = val;
         const vals: string[] = [];
-        for(const tbd of interpolationRule){
-            if(typeof tbd === 'string') {
-                vals.push(tbd);
+        for(const observerPart of interpolationRule){
+            if(typeof observerPart === 'string') {
+                vals.push(observerPart);
                 continue;
             }
-            if(tbd.latestVal === undefined) return;
-            vals.push(tbd.latestVal);
+            if(observerPart.latestVal === undefined) {
+                console.log({observerPart});
+                return;
+            }
+            vals.push(observerPart.latestVal);
         }
         const prop = this.parsedMarkers?.get(interpolationRule);
         (<any>this.enhancedElement)[prop!] = vals.join('');
