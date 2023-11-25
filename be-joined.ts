@@ -73,6 +73,7 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
         }
         const prop = this.parsedMarkers?.get(interpolationRule);
         (<any>this.enhancedElement)[prop!] = vals.join('');
+        //TODO:  this is getting called many more times than would seem necessary
         //console.log(vals);
 
     }
