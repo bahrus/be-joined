@@ -33,7 +33,7 @@ results in:
 <a href=https://docs.joshuatz.com/cheatsheets/js/js-classes/#basic-improved---prototype-definition>Basic, Improved - Prototype Definition</a>
 ```
 
-> [!Note]
+> [!NOTE]
 > From a performance point of view, this enhancement works best with ynamic (client-side) content that derives from a template (for example, for a repeating web component) as opposed to server-rendered content.  To work effectively with server-rendered content, see [be-itemized](https://github.com/bahrus/be-itemized), which (may, tbd) use be-joined behind the scenes.
 
 ## Special Symbols
