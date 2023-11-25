@@ -2,6 +2,11 @@
 
 Allow values from microdata and form elements and host properties to be combined together (interpolated).
 
+[![NPM version](https://badge.fury.io/js/be-joined.png)](http://badge.fury.io/js/be-joined)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-joined?style=for-the-badge)](https://bundlephobia.com/result?p=be-joined)
+<img src="http://img.badgesize.io/https://cdn.jsdelivr.net/npm/be-joined?compression=gzip">
+[![Playwright Tests](https://github.com/bahrus/be-joined/actions/workflows/CI.yml/badge.svg?branch=baseline)](https://github.com/bahrus/be-joined/actions/workflows/CI.yml)
+
 Example 1:
 
 ```html
@@ -57,3 +62,37 @@ As we've seen above, we will encounter special symbols used in order to keep the
 ```
 
 In this example, when no symbols are provided (or slash is used), we assume the property values should come from the host (ish)
+
+[TODO] resolve issue with safari.
+
+## Viewing Demos Locally
+
+Any web server that can serve static files will do, but...
+
+1.  Install git.
+2.  Fork/clone this repo.
+3.  Install node.js.
+4.  Open command window to folder where you cloned this repo.
+5.  > npm install
+6.  > npm run serve
+7.  Open http://localhost:3030/demo/ in a modern browser.
+
+## Running Tests
+
+```
+> npm run test
+```
+
+## Using from ESM Module:
+
+```JavaScript
+import 'be-joined/be-joined.js';
+```
+
+## Using from CDN:
+
+```html
+<script type=module crossorigin=anonymous>
+    import 'https://esm.run/be-joined';
+</script>
+```
