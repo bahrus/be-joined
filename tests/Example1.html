@@ -10,10 +10,16 @@
         <div itemscope>
           <meta itemprop=protocol content=https>
           <meta itemprop=domain content=docs.joshatz.com>
-          <a -href="{$protocol}://{$domain}" be-joined
+          <meta itemprop=articleType content=cheatsheets>
+          <input id=language value=js>
+          <input name=topic value=classes>
+      
+          <meta itemprop=section content=basic-improved---prototype-definition>
+          <a -href="{$protocol}://{$domain}/{$articleType}/{#language}/{#language}-{@topic}/#{$section}" be-joined
           >Basic, Improved - Prototype Definition</a>
         </div>
     </form>
+    <div id=target></div>
     <script type=importmap>
         {
             "imports": {
@@ -30,6 +36,17 @@
     </script>
     <script type=module>
         import '../be-joined.js';
+    </script>
+    <script>
+        function runTest(){
+            if(document.querySelector('a').href === 'https://docs.joshatz.com/cheatsheets/js/js-classes/#basic-improved---prototype-definition'){
+                target.setAttribute('mark', 'good');
+            }
+            
+        }
+        setTimeout(() => {
+            runTest();
+        }, 1000);
     </script>
 </body>
 </html>
