@@ -63,7 +63,6 @@ As we've seen above, we will encounter special symbols used in order to keep the
 
 In this example, when no symbols are provided (or slash is used), we assume the property values should come from the host (ish)
 
-[TODO] resolve issue with safari.
 
 ## Viewing Demos Locally
 
