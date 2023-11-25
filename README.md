@@ -54,7 +54,7 @@ As we've seen above, we will encounter special symbols used in order to keep the
 1.  First, do a "closest" for an element with attribute itemscope, where the tag name has a dash in it.  Do that search recursively.  
 2.  If no match found, use getRootNode().host.
 
-## HTML5 compliance
+## Example 1a HTML5 compliance
 
 To be HTML5 compliant, use data-derive-*-from instead:
 
@@ -74,6 +74,16 @@ To be HTML5 compliant, use data-derive-*-from instead:
     >Basic, Improved - Prototype Definition</a>
   </div>
 </form>
+```
+
+## Example 1c - Single property binding (including non string)
+
+```html
+<div itemscope>
+  <link itemprop="isVegetarian" href="https://schema.org/True">
+  <input -disabled=$isVegetarian be-joined>
+
+</div>
 ```
 
 ## Example 2 [Untested]
