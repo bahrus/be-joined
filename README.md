@@ -1,4 +1,4 @@
-# be-joined [TODO]
+# be-joined
 
 Allow values from microdata and form elements and host properties to be combined together (interpolated).
 
@@ -46,12 +46,12 @@ As we've seen above, we will encounter special symbols used in order to keep the
 1.  First, do a "closest" for an element with attribute itemscope, where the tag name has a dash in it.  Do that search recursively.  
 2.  If no match found, use getRootNode().host.
 
-## Example 2 [TODO]
+## Example 2 [Untested]
 
 ```html
 <my-custom-element>
   #shadow
-      <a -href="{protocol}://{domain}/{/articleType}/{language}/{language}-{topic}/#{section}" be-joined
+      <a -href="{protocol}://{domain}/{articleType}/{language}/{language}-{topic}/#{section}" be-joined
       >Basic, Improved - Prototype Definition</a>
 </my-custom-element>
 ```
