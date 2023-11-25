@@ -9,7 +9,7 @@ export class BeJoined extends BE {
     async attach(enhancedElement, enhancementInfo) {
         super.attach(enhancedElement, enhancementInfo);
         const { attributes } = enhancedElement;
-        this.markers = Array.from(attributes).filter(x => x.name.startsWith('-') && x.value.length > 0);
+        this.markers = Array.from(attributes).filter(x => x.value.length > 0 && (x.name.startsWith('-') || (x.name.startsWith(dataDerive) && x.name.endsWith(deriveFrom))));
     }
     onMarkers(self) {
         const { markers } = self;
@@ -18,7 +18,9 @@ export class BeJoined extends BE {
         const observeRules = [];
         for (const marker of markers) {
             const { name, value } = marker;
-            const propName = lispToCamel(name.substring(1));
+            const attr = name.startsWith('-') ? name.substring(1) : name.substring(dataDerive.length, name.length - deriveFrom.length);
+            console.log(attr);
+            const propName = lispToCamel(attr);
             const interpolationRule = [];
             //parsedMarkers[propName] = interpolationRule;
             parsedMarkers.set(interpolationRule, propName);
@@ -50,7 +52,7 @@ export class BeJoined extends BE {
         };
     }
     handleObserveCallback = (observe, val) => {
-        console.log({ observe, val });
+        //console.log({observe, val});
         const interpolationRule = this.observerToInterpolationRule?.get(observe);
         const propObserver = interpolationRule.find(x => typeof x !== 'string' && x.observe === observe);
         if (propObserver.latestVal === val)
@@ -63,7 +65,7 @@ export class BeJoined extends BE {
                 continue;
             }
             if (observerPart.latestVal === undefined) {
-                console.log({ observerPart });
+                //console.log({observerPart});
                 return;
             }
             vals.push(observerPart.latestVal);
@@ -92,6 +94,8 @@ export class BeJoined extends BE {
 const tagName = 'be-joined';
 const ifWantsToBe = 'be-joined';
 const upgrade = '*';
+const dataDerive = 'data-derive-';
+const deriveFrom = '-from';
 const xe = new XE({
     config: {
         tagName,
