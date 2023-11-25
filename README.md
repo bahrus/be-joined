@@ -33,6 +33,9 @@ results in:
 <a href=https://docs.joshuatz.com/cheatsheets/js/js-classes/#basic-improved---prototype-definition>Basic, Improved - Prototype Definition</a>
 ```
 
+> [!Note]
+> From a performance point of view, this enhancement works best with ynamic (client-side) content that derives from a template (for example, for a repeating web component) as opposed to server-rendered content.  To work effectively with server-rendered content, see [be-itemized](https://github.com/bahrus/be-itemized), which (may, tbd) use be-joined behind the scenes.
+
 ## Special Symbols
 
 As we've seen above, we will encounter special symbols used in order to keep the statements small.  A summary of those symbols is shown below
@@ -51,9 +54,9 @@ As we've seen above, we will encounter special symbols used in order to keep the
 1.  First, do a "closest" for an element with attribute itemscope, where the tag name has a dash in it.  Do that search recursively.  
 2.  If no match found, use getRootNode().host.
 
-## HTML5 compliance [TODO]
+## HTML5 compliance
 
-To be HTML5 compliant, use data-- instead:
+To be HTML5 compliant, use data-derive-*-from instead:
 
 ```html
 <form>
