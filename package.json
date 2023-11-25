@@ -1,6 +1,6 @@
 {
   "name": "be-joined",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Allow microdata elements and host properties to be combined together (interpolated).",
   "keywords": [
     "web components",
