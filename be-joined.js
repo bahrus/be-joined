@@ -51,9 +51,21 @@ export class BeJoined extends BE {
     }
     handleObserveCallback = (observe, val) => {
         const interpolationRule = this.observerToInterpolationRule?.get(observe);
-        const propObserver = interpolationRule?.find(x => typeof x !== 'string' && x.observe === observe);
+        const propObserver = interpolationRule.find(x => typeof x !== 'string' && x.observe === observe);
         propObserver.latestVal = val;
-        console.log({ observe, val, interpolationRule, propObserver });
+        const vals = [];
+        for (const tbd of interpolationRule) {
+            if (typeof tbd === 'string') {
+                vals.push(tbd);
+                continue;
+            }
+            if (tbd.latestVal === undefined)
+                return;
+            vals.push(tbd.latestVal);
+        }
+        const prop = this.parsedMarkers?.get(interpolationRule);
+        this.enhancedElement[prop] = vals.join('');
+        console.log({ observe, val, interpolationRule, propObserver, vals });
     };
     onParsedMarkers(self) {
         const { parsedMarkers } = self;
