@@ -61,6 +61,7 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
     handleObserveCallback = (observe: ObserveRule, val: any) => {
         const interpolationRule = this.observerToInterpolationRule?.get(observe)!;
         const propObserver = interpolationRule.find(x => typeof x !== 'string' && x.observe === observe) as PropObserver;
+        if(propObserver.latestVal === val) return;
         propObserver.latestVal = val;
         const vals: string[] = [];
         for(const tbd of interpolationRule){
@@ -74,7 +75,6 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
         const prop = this.parsedMarkers?.get(interpolationRule);
         (<any>this.enhancedElement)[prop!] = vals.join('');
         //TODO:  this is getting called many more times than would seem necessary
-        //console.log(vals);
 
     }
 
@@ -85,6 +85,7 @@ export class BeJoined extends BE<AP, Actions> implements Actions{
                 if(typeof propObserverOrString === 'string') continue;
                 const {observe} = propObserverOrString;
                 new Observer(self, observe, self.#abortControllers);
+                //console.log('added observer');
                 //new Observer(self, )
             }
         }

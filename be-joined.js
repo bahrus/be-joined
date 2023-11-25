@@ -52,6 +52,8 @@ export class BeJoined extends BE {
     handleObserveCallback = (observe, val) => {
         const interpolationRule = this.observerToInterpolationRule?.get(observe);
         const propObserver = interpolationRule.find(x => typeof x !== 'string' && x.observe === observe);
+        if (propObserver.latestVal === val)
+            return;
         propObserver.latestVal = val;
         const vals = [];
         for (const tbd of interpolationRule) {
@@ -66,7 +68,6 @@ export class BeJoined extends BE {
         const prop = this.parsedMarkers?.get(interpolationRule);
         this.enhancedElement[prop] = vals.join('');
         //TODO:  this is getting called many more times than would seem necessary
-        //console.log(vals);
     };
     onParsedMarkers(self) {
         const { parsedMarkers } = self;
@@ -76,6 +77,7 @@ export class BeJoined extends BE {
                     continue;
                 const { observe } = propObserverOrString;
                 new Observer(self, observe, self.#abortControllers);
+                //console.log('added observer');
                 //new Observer(self, )
             }
         }
